@@ -1,9 +1,28 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+
+import TournamentList from './TournamentList';
+import CreateTournament from './TournamentCreate';
+
+const Stack = createNativeStackNavigator();
 
 export default function Tournaments() {
   return (
-    <View className='flex-1 pt-6'>
-    </View>
+    <NavigationContainer independent={true}>
+      <Stack.Navigator initialRouteName={'TournamentList'}>
+        <Stack.Screen
+            options={{ title: 'Мої турніри' }}
+            name="TournamentList"
+            component={TournamentList}
+          ></Stack.Screen>
+          <Stack.Screen
+              options={{ title: 'Додати турнір' }}
+              name="CreateTournament"
+              component={CreateTournament}
+            ></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }

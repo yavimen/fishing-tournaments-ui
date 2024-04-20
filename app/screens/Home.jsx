@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // Screens
 import Tournaments from "./Tournaments";
 import Settings from "./Settings";
-import { SafeAreaView } from "react-native-safe-area-context";
+import TournamentService from '../services/tournamentsService';
 
 //Screen names
 const tournamentsName = "Tournaments";
@@ -15,6 +15,11 @@ const settingsName = "Settings";
 const Tab = createBottomTabNavigator();
 
 function Home() {
+
+  const { getAllTournaments } = TournamentService;
+
+  getAllTournaments().then((result) => {console.log(result)});
+
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator

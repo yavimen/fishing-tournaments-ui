@@ -1,4 +1,3 @@
-import { Button, View } from "react-native";
 import { AuthProvider, useAuth } from "./app/context/AuthContext";
 import Home from "./app/screens/Home";
 import Login from "./app/screens/Login";
@@ -6,6 +5,7 @@ import Register from "./app/screens/Register";
 import ChangePassword from "./app/screens/ChangePassword";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+
 export default function App() {
   return <AuthProvider>
     <Layout></Layout>

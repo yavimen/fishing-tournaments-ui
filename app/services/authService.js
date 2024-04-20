@@ -1,13 +1,5 @@
 import { handleError } from "../shared/helpers";
 
-import axios from "axios";
-
-const BASE_URL = "https://8a09-176-39-31-157.ngrok-free.app"; // Replace with your API base URL
-
-const apiService = axios.create({
-  baseURL: BASE_URL,
-});
-
 export const getTestData = async () => {
   return await get("api/v1/test");
 };
@@ -37,21 +29,21 @@ export const resetPassword = async (email) => {
 };
 
 // helpers
-const get = async (endpoint) => {
+export const get = async (endpoint) => {
   const response = await handleError(async () => {
     return await apiService.get(endpoint);
   });
-  return response.data;
+  return response?.data;
 };
 
-const post = async (endpoint, data) => {
+export const post = async (endpoint, data) => {
   const response = await handleError(async () => {
     return await apiService.post(endpoint, data);
   });
-  return response.data;
+  return response?.data;
 };
 
-const put = async (endpoint, data) => {
+export const put = async (endpoint, data) => {
   const response = await apiService.put(endpoint, data);
-  return response.data;
+  return response?.data;
 };

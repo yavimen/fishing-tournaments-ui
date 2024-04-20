@@ -7,10 +7,11 @@ import {
   Image,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SettingsMenuItem from "../shared/components/SettingsMenuItem";
 import { useAuth } from "../context/AuthContext";
 import avatar from "../../assets/fisherman.png";
+import ConfirmationDialog from "../shared/components/ConfirmationDialog";
 
 import { getAuthTestData } from "../services/authService";
 
@@ -64,15 +65,35 @@ export default function Settings() {
   text-center
 `;
 
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [cofirmText, setCofirmText] = useState(null);
+  const [cofirmCancelAction, setCofirmCancelAction] = useState(() => () => {
+    setShowConfirmDialog(false);
+  });
+  const [cofirmSubmitAction, setCofirmSubmitAction] = useState(() => () => {
+    setShowConfirmDialog(false);
+  });
 
-useEffect(() => {
+  useEffect(() => {
     const sendAuthRequest = async () => {
-        const response = await getAuthTestData();
-        console.info("Response: ", response);
-    }
+      const response = await getAuthTestData();
+      console.info("Response: ", response);
+    };
 
     sendAuthRequest();
-}, []);
+  }, []);
+
+  const onLogoutAction = () => {
+    setCofirmText('Ви впевнені, що хочете вийти з облікового запису ?');
+    setCofirmCancelAction(() => () => {
+      setShowConfirmDialog(false);
+    });
+    setCofirmSubmitAction(() => () => {
+      logout();
+      setShowConfirmDialog(false);
+    });
+    setShowConfirmDialog(true);
+  };
 
   return (
     <SafeAreaView className="flex-1 pt-6">
@@ -109,9 +130,15 @@ useEffect(() => {
         <SettingsMenuItem
           iconName={"log-out"}
           title={"Вийти з акаунта"}
-          onPressHandler={logout}
+          onPressHandler={() => onLogoutAction()}
         />
       </ScrollView>
+      <ConfirmationDialog
+        visible={showConfirmDialog}
+        message={cofirmText}
+        onCancel={cofirmCancelAction}
+        onConfirm={cofirmSubmitAction}
+      />
     </SafeAreaView>
   );
 }
