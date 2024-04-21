@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 
-const ConfirmationDialog = ({ visible, message, onCancel, onConfirm }) => {
+export const ConfirmationDialog = ({ visible, message, onCancel, onConfirm }) => {
   return (
     <Modal
       animationType="slide"
@@ -25,5 +25,3 @@ const ConfirmationDialog = ({ visible, message, onCancel, onConfirm }) => {
     </Modal>
   );
 };
-
-export default ConfirmationDialog;

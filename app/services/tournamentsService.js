@@ -1,90 +1,26 @@
-import db from '../context/DbContext';
-import jwtService from '../services/jwtService';
+import {get, put, post, remove} from './apiRequestHelpers'
 
-const TournamentService = {
-  // Create a new tournament
+const TOURNAMENTS_CONTROLLER_URL = "api/v1/tournaments";
+
+export const tournamentsService = {
+  getMyTournaments: async () => {
+    const data = await get(`${TOURNAMENTS_CONTROLLER_URL}`);
+    return data;
+  },
+  getMyTournamentById: async (tounamentId) => {
+    const data = await get(`${TOURNAMENTS_CONTROLLER_URL}/${tounamentId}`);
+    return data;
+  },
   createTournament: async (tournament) => {
-    const userId = await jwtService.getUserId();
-
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        let {
-          applicationUserId,
-          name,
-          description,
-          startConditions,
-          startDate,
-          endDate,
-          maxParticipantNumber,
-          createdAt,
-          updatedAt
-        } = tournament;
-
-        applicationUserId = userId;
-        createdAt = new Date().toString();
-
-        tx.executeSql(
-          'INSERT INTO Tournaments (ApplicationUserId, Name, Description, StartConditions, StartDate, EndDate, MaxParticipantNumber, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-          [applicationUserId, name, description, startConditions, startDate, endDate, maxParticipantNumber, createdAt, updatedAt],
-          (_, results) => resolve(results.insertId),
-          (_, error) => reject(error)
-        );
-      });
-    });
+    const data = await post(`${TOURNAMENTS_CONTROLLER_URL}`, tournament);
+    return data;
   },
-
-  // Read all tournaments
-  getAllTournaments: async () => {
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * FROM Tournaments',
-          [],
-          (_, { rows }) => resolve(rows),
-          (_, error) => reject(error)
-        );
-      });
-    });
-  },
-
-  // Update a tournament
   updateTournament: async (id, tournament) => {
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        const {
-          applicationUserId,
-          name,
-          description,
-          startConditions,
-          startDate,
-          endDate,
-          maxParticipantNumber,
-          updatedAt
-        } = tournament;
-        
-        tx.executeSql(
-          'UPDATE Tournaments SET applicationUserId=?, name=?, description=?, startConditions=?, startDate=?, endDate=?, maxParticipantNumber=?, updatedAt=? WHERE Id=?',
-          [applicationUserId, name, description, startConditions, startDate, endDate, maxParticipantNumber, updatedAt, id],
-          (_, results) => resolve(results.rowsAffected),
-          (_, error) => reject(error)
-        );
-      });
-    });
+    const data = await put(`${TOURNAMENTS_CONTROLLER_URL}/${id}`, tournament);
+    return data;
   },
-
-  // Delete a tournament
-  deleteTournament: async (id) => {
-    return new Promise((resolve, reject) => {
-      db.transaction(tx => {
-        tx.executeSql(
-          'DELETE FROM Tournaments WHERE Id=?',
-          [id],
-          (_, results) => resolve(results.rowsAffected),
-          (_, error) => reject(error)
-        );
-      });
-    });
+  deleteTournament: async (tounamentId) => {
+    const data = await remove(`${TOURNAMENTS_CONTROLLER_URL}/${tounamentId}`);
+    return data;
   }
-};
-
-export default TournamentService;
+}

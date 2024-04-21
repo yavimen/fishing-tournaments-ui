@@ -5,7 +5,7 @@ export const handleError = async (func) => {
     if (error.response) {
       // The request was made and the server responded with a status code
       console.info("Request failed with status:", error.response.status);
-      console.info("Request data:", error.response.data);
+      console.info("Request data:", error);
       if (error.response.status === 500)
         return {
           data: {
@@ -13,6 +13,9 @@ export const handleError = async (func) => {
             message: error.response?.data.message,
           },
         };
+    } else if (error.response.status === 401) {
+      // The request was made but no response was received
+      console.error("Token exired:", error.response.data);
     } else if (error.request) {
       // The request was made but no response was received
       console.error("No response received:", error.request);

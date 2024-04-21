@@ -6,7 +6,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // Screens
 import Tournaments from "./Tournaments";
 import Settings from "./Settings";
-import TournamentService from '../services/tournamentsService';
+
+import { getAuthTestData } from "../services/authService";
 
 //Screen names
 const tournamentsName = "Tournaments";
@@ -16,9 +17,11 @@ const Tab = createBottomTabNavigator();
 
 function Home() {
 
-  const { getAllTournaments } = TournamentService;
+  React.useEffect(() => {
+    getAuthTestData()
+    .then((result) => console.info("Home test req", result));
+  }, []);
 
-  getAllTournaments().then((result) => {console.log(result)});
 
   return (
     <NavigationContainer independent={true}>
@@ -38,7 +41,7 @@ function Home() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "tomato",
+          tabBarActiveTintColor: "grey",
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
           tabBarStyle: { padding: 10, height: 60 },

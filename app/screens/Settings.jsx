@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import SettingsMenuItem from "../shared/components/SettingsMenuItem";
 import { useAuth } from "../context/AuthContext";
 import avatar from "../../assets/fisherman.png";
-import ConfirmationDialog from "../shared/components/ConfirmationDialog";
+import { ConfirmationDialog } from "../shared/components";
 
 import { getAuthTestData } from "../services/authService";
 

@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
           token,
           authenticated: true,
         });
+        console.log("Token set from local storage")
       }
     };
 
@@ -47,6 +48,8 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${result.token}`;
 
       await SecureStore.setItemAsync(TOKEN_KEY, result.token);
+
+      console.info("AuthContext. set jwt success: ", result)
     }
     return result;
   };

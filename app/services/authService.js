@@ -1,4 +1,4 @@
-import { handleError } from "../shared/helpers";
+import {get, put, post} from './apiRequestHelpers'
 
 export const getTestData = async () => {
   return await get("api/v1/test");
@@ -26,24 +26,4 @@ export const resetPassword = async (email) => {
   return await post(AUTH_CONTROLLER_URL + "reset-password/start", {
     email,
   });
-};
-
-// helpers
-export const get = async (endpoint) => {
-  const response = await handleError(async () => {
-    return await apiService.get(endpoint);
-  });
-  return response?.data;
-};
-
-export const post = async (endpoint, data) => {
-  const response = await handleError(async () => {
-    return await apiService.post(endpoint, data);
-  });
-  return response?.data;
-};
-
-export const put = async (endpoint, data) => {
-  const response = await apiService.put(endpoint, data);
-  return response?.data;
 };
