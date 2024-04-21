@@ -1,10 +1,10 @@
 import { TouchableOpacity, Text } from "react-native";
 import React from "react";
 
-export default function FloatingAddButton({ onPress }) {
+export function FloatingAddButton({ onPress }) {
   return (
     <TouchableOpacity
-      className="absolute bottom-10 right-10 w-14 h-14 bg-gray-500 rounded-full flex items-center justify-center"
+      className="absolute bottom-10 right-10 w-14 h-14 bg-gray-400 rounded-full flex items-center justify-center"
       onPress={() => {
         onPress ? onPress() : null;
       }}

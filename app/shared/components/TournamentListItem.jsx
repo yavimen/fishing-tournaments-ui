@@ -5,7 +5,7 @@ import React from 'react'
 export function TournamentListItem({ tournament, onPress }) {
   return (
     <TouchableOpacity onPress={onPress} className='flex flex-row bg-white mb-3 rounded-lg drop-shadow-2xl'>
-      <View className='basis-4/12 flex bg-gray-500 rounded-lg p-2' >
+      <View className='basis-4/12 flex bg-gray-400 rounded-lg p-2' >
         <View>
           <Text className='text-center text-md text-white'>{tournament.startDate ?? '-'}</Text>
         </View>
@@ -19,10 +19,10 @@ export function TournamentListItem({ tournament, onPress }) {
         </View>
         <View className='flex flex-row justify-end items-center'>
           <View>
-            <FeatherIcon color="black" name="user" size={15} />
+            <Text className='black'>{tournament.participantAmount ?? 0}</Text>
           </View>
           <View>
-            <Text className='black'>{tournament.participantAmount ?? 0}</Text>
+            <FeatherIcon color="black" name="user" size={15} />
           </View>
         </View>
       </View>

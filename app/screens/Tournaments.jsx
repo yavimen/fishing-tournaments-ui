@@ -7,7 +7,6 @@ import TournamentList from "./tournaments/TournamentList";
 import CreateTournament from "./tournaments/TournamentCreate";
 import TournamentDetails from "./tournaments/TournamentDetails";
 import UpdateTournament from "./tournaments/TournamentUpdate";
-import TournamentPage from './tournaments/TournamentPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,11 +33,6 @@ export default function Tournaments() {
           options={{ headerShown: false }}
           name="UpdateTournament"
           component={UpdateTournament}
-        ></Stack.Screen>
-        <Stack.Screen
-          options={{ headerShown: true }}
-          name="TournamentPage"
-          component={TournamentPage}
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

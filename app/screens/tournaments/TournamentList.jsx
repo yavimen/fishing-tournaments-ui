@@ -1,11 +1,10 @@
 import { ScrollView, View, RefreshControl } from "react-native";
 import React, { useEffect, useState } from "react";
-import FloatingAddButton from "../../shared/components/FloatingAddButton";
 
 import { useNavigation } from "@react-navigation/native";
 import { tournamentsService } from "../../services";
 
-import { TournamentListItem } from "../../shared/components";
+import { TournamentListItem, FloatingAddButton } from "../../shared/components";
 
 import { useGlobalContext } from "../../context/GlobalContext";
 
@@ -48,7 +47,7 @@ export default function TournamentList() {
         ))}
       </ScrollView>
       <FloatingAddButton
-        onPress={() => navigation.navigate("TournamentPage")}
+        onPress={() => navigation.navigate("CreateTournament")}
       />
     </View>
   );
