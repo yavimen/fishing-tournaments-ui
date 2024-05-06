@@ -8,3 +8,4 @@ export { SpotListItem } from './SpotListItem';
 export { BaseInput } from './BaseInput';
 export { BaseSelect } from './BaseSelect';
 export { BaseButton } from './BaseButton';
+export { ParticipantListItem } from './ParticipantListItem';

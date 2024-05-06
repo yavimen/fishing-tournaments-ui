@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import { useGlobalContext } from '../../context/GlobalContext';
 
-import { BaseInput, BaseButton } from '../../shared/components';
+import { BaseInput, BaseButton, BaseSelect } from '../../shared/components';
 import { useToast } from "react-native-toast-notifications";
 
 export default function CreateTournament() {
@@ -15,6 +15,13 @@ export default function CreateTournament() {
   const [loading, setLoading] = useState(false);
 
   const { setTournaments } = useGlobalContext();
+
+  const [ratingСriterion, setRatingСriterion] = useState(null);
+
+  const ratingСriterions = [
+    { label: "Вага", value: 0 },
+    { label: "Довжина", value: 1 },
+  ];
 
   const navigation = useNavigation();
   const toast = useToast();
@@ -27,12 +34,17 @@ export default function CreateTournament() {
       return;
     }
     const maxParticipantNumber = parseInt(maxParticipants);
-    if (!maxParticipantNumber || maxParticipantNumber <= 0 || maxParticipantNumber >= 100) {
-      toast.show('Уведіть максимальну кількість учасників турніру (1-99)', {type: 'danger'});
+    if (!maxParticipantNumber || maxParticipantNumber <= 3 || maxParticipantNumber >= 100) {
+      toast.show('Уведіть максимальну кількість учасників турніру (3-99)', {type: 'danger'});
       setLoading(false);
       return;
     }
-    await tournamentsService.createTournament({ name, maxParticipantNumber })
+    if (!ratingСriterion) {
+      toast.show('Оберіть критерій оцінювання', {type: 'danger'});
+      setLoading(false);
+      return;
+    }
+    await tournamentsService.createTournament({ name, maxParticipantNumber, ratingСriterion })
 
     const tournaments = await tournamentsService.getMyTournaments();
     
@@ -59,14 +71,20 @@ export default function CreateTournament() {
           setProperty={setName}
         />
         <BaseInput
-          label={'Максимальна кількість учасників (1-99)'}
+          label={'Максимальна кількість учасників (3-99)'}
           property={maxParticipants}
           setProperty={setMaxParticipants}
           inputType={'numeric'}
         />
-
+        <BaseSelect
+          value={ratingСriterion}
+          setValue={setRatingСriterion}
+          label={"Критерій оцінювання"}
+          items={ratingСriterions}
+        />
         <BaseButton
           label={'Створити турнір'}
+          myClassName={'mt-3'}
           onPress={handleCreateTournament}
           loading={loading}
         />

@@ -11,6 +11,10 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
   const toast = useToast();
   const labelCols = 6;
   const { setTournaments } = useGlobalContext();
+  const ratingСriterions = [
+    { label: "Вага", value: 0 },
+    { label: "Довжина", value: 1 },
+  ];
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [cofirmText, setCofirmText] = useState(null);
@@ -87,6 +91,12 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
         <TextRow
           label={"Максимальна кількість учасників:"}
           value={tournamentDetails?.maxParticipantNumber ?? "-"}
+          classes={"mb-2"}
+          labelCols={labelCols}
+        />
+        <TextRow
+          label={"Критерій оцінювання:"}
+          value={ratingСriterions.find(x => x.value === tournamentDetails.ratingСriterion)?.label ?? "-"}
           classes={"mb-2"}
           labelCols={labelCols}
         />

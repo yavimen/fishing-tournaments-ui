@@ -10,6 +10,7 @@ export const GlobalProvider = ({ children }) => {
     const [tournamentDetails, setTournamentDetails] = useState({});
     const [matches, setMatches] = useState({items: [], totalCount: 0});
     const [spots, setSpots] = useState({items: [], totalCount: 0});
+    const [myTournamentParticipants, setMyTournamentParticipants] = useState({items: [], totalCount: 0});
 
     return (
         <GlobalContext.Provider value={{ 
@@ -26,7 +27,10 @@ export const GlobalProvider = ({ children }) => {
             matches,
             setMatches,
             spots,
-            setSpots }}
+            setSpots,
+            myTournamentParticipants,
+            setMyTournamentParticipants,
+         }}
         >
             {children}
         </GlobalContext.Provider>

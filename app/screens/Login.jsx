@@ -1,44 +1,66 @@
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { useAuth } from '../context/AuthContext';
-import {useNavigation} from '@react-navigation/native'
+import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { BaseInput, BaseButton } from "../shared/components";
+import { useToast } from "react-native-toast-notifications";
 
 export default function Login() {
+  const toast = useToast();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-
-  const [loginResponse, setLoginResponse] = useState(null);
 
   const navigation = useNavigation();
 
   const onLogin = async () => {
+    setLoading(true);
+    if (!email) {
+      toast.show('Уведіть пошту', {type: 'danger'});
+      setLoading(false);
+      return;
+    }
+    if (!password) {
+      toast.show('Уведіть пароль', {type: 'danger'});
+      setLoading(false);
+      return;
+    }
     const result = await login(email, password);
-    console.info(result);
-    setLoginResponse(result)
-  }
+    if (result.success === false) {
+      toast.show(result.message, {type: 'danger'});
+    }
+    setLoading(false);
+  };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className='my-2 text-base'>Вхід у обліковий запис</Text>
-      <TextInput className='my-2' placeholder='Пошта' onChangeText={(e) => setEmail(e)} />
-      <TextInput className='my-2' placeholder='Пароль'secureTextEntry={true} onChangeText={(e) => setPassword(e)} />
-      <Button onPress={onLogin} title='Ввійти'/>
-      <Text className='text-red-700'>{loginResponse?.success === false ? loginResponse.message : null}</Text>
-      
-      <View className='flex-row items-center my-2'>
+    <View className="flex-1 justify-center bg-white px-3">
+      <View>
+      <Text className="my-2 text-center text-lg">Вхід у обліковий запис</Text>
+      <BaseInput label={"Пошта"} property={email} setProperty={setEmail} />
+      <BaseInput
+        myClassName={'mb-6'}
+        label={"Пароль"}
+        property={password}
+        setProperty={setPassword}
+        secureTextEntry={true}
+      />
+      <BaseButton onPress={onLogin} label="Ввійти" loading={loading} />
+
+      <View className="flex-row justify-center items-center my-2">
         <Text>Забули пароль ? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
-          <Text className='ml-1 text-sky-600'>Відновити пароль</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")}>
+          <Text className="ml-1 text-sky-400">Відновити пароль</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text className='text-sky-600'>
+      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Text className="text-center text-sky-400">
           Зареєструвати новий акаунт
         </Text>
       </TouchableOpacity>
     </View>
-  )
+    </View>
+  );
 }

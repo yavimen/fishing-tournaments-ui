@@ -53,6 +53,7 @@ export function MatchCreate({ route, navigation }) {
       markerData.longitude
     );
     setGoogleAddress(result);
+    console.info("address: ", result);
   };
 
   const handleMapMoving = (e) => {
@@ -89,10 +90,10 @@ export function MatchCreate({ route, navigation }) {
     console.log("startDateTime ", startDate);
     if (match?.id) {
       result = await matchesService.updateMatch(match.id, {
-        startDateTime, // bug
+        ...markerData,
+        startDateTime,
         locationName,
         actualAddressName: googleAddress?.plus_code?.compound_code,
-        ...markerData,
       });
     } else {
       result = await matchesService.createMatch({
@@ -166,7 +167,6 @@ export function MatchCreate({ route, navigation }) {
           property={locationName}
           setProperty={setLocationName}
         />
-        
         <MyDateTimePicker myClassName={'mb-3'} date={startDateTime} setDate={setStartDateTime} />
 
         <BaseButton

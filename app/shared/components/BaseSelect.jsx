@@ -1,42 +1,43 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
+  { label: "Item 1", value: "1" },
+  { label: "Item 2", value: "2" },
 ];
 
-export const BaseSelect = () => {
-  const [value, setValue] = useState(null);
+export const BaseSelect = ({ label, items, value, setValue }) => {
   const [isFocus, setIsFocus] = useState(false);
 
+  const renderItem = (item) => {
+    return (
+      <View className="p-2">
+        <Text>{item.label}</Text>
+      </View>
+    );
+  };
+
   return (
-    <View>
-    <Text className="font-bold mb-1 ml-3">Учасник</Text>
+    <View className='mb-2'>
+      <Text className="text-base mb-1 ml-3">{label ?? "Opa"}</Text>
       <Dropdown
-        className='border border-black rounded-3xl py-1 px-3'
-        style={[styles.dropdown, isFocus && { borderColor: '#38bdf8' }]}
+        className="border border-black rounded-3xl py-1 px-3"
+        style={[styles.dropdown, isFocus && { borderColor: "#38bdf8" }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        data={data}
-        search
+        data={items ?? data}
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={'...'}
+        placeholder={"..."}
         searchPlaceholder="Пошук..."
         value={value}
+        containerStyle={styles.itemsContainerStyle}
+        renderItem={renderItem}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChange={item => {
+        onChange={(item) => {
           setValue(item.value);
           setIsFocus(false);
         }}
@@ -59,9 +60,8 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 12,
-    borderRadius: 24,
+  itemsContainerStyle: {
+    borderRadius: 20,
+    padding: 4,
   },
 });

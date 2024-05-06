@@ -51,12 +51,12 @@ export const Layout = () => {
           ></Stack.Screen>
         )}
         <Stack.Screen
-          options={{ title: "Реєстрація" }}
+          options={{ title: "" }}
           name="Register"
           component={Register}
         ></Stack.Screen>
         <Stack.Screen
-          options={{ title: "Зміна пароля" }}
+          options={{ title: "" }}
           name="ChangePassword"
           component={ChangePassword}
         ></Stack.Screen>

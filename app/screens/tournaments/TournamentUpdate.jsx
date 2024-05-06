@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { tournamentsService } from "../../services";
 
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useToast } from "react-native-toast-notifications";
-import { BaseInput, BaseButton } from "../../shared/components";
+import { BaseInput, BaseButton, BaseSelect } from "../../shared/components";
 
 export default function UpdateTournament({ route, navigation }) {
   const tournament = route.params.tournament;
@@ -23,6 +16,14 @@ export default function UpdateTournament({ route, navigation }) {
   const [startConditions, setStartConditions] = useState(
     tournament.startConditions
   );
+  const [ratingСriterion, setRatingСriterion] = useState(
+    tournament.ratingСriterion
+  );
+
+  const ratingСriterions = [
+    { label: "Вага", value: 0 },
+    { label: "Довжина", value: 1 },
+  ];
 
   const { getMyTournamentById, setTournamentDetails } = useGlobalContext();
   const toast = useToast();
@@ -55,6 +56,7 @@ export default function UpdateTournament({ route, navigation }) {
       maxParticipantNumber,
       description,
       startConditions,
+      ratingСriterion,
     });
 
     if (result.success === false) {
@@ -88,10 +90,16 @@ export default function UpdateTournament({ route, navigation }) {
           setProperty={setName}
         />
         <BaseInput
-          label={"Максимальна кількість учасників (1-99)"}
+          label={"Максимальна кількість учасників (3-99)"}
           property={maxParticipants}
           setProperty={setMaxParticipants}
           inputType={"numeric"}
+        />
+        <BaseSelect
+          value={ratingСriterion}
+          setValue={setRatingСriterion}
+          label={"Критерій оцінювання"}
+          items={ratingСriterions}
         />
         <BaseInput
           label={"Опис турніру"}
