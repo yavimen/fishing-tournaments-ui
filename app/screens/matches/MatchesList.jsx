@@ -18,7 +18,7 @@ export function MatchesList({ tournamentId, navigation, tournament }) {
   };
 
   return (
-    <View className="flex bg-gray-500 p-3 h-full">
+    <View className="flex bg-white p-3 h-full">
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

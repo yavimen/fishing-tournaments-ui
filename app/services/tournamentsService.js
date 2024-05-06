@@ -3,8 +3,8 @@ import {get, put, post, remove} from './apiRequestHelpers'
 const TOURNAMENTS_CONTROLLER_URL = "api/v1/tournaments";
 
 export const tournamentsService = {
-  getMyTournaments: async () => {
-    const data = await get(`${TOURNAMENTS_CONTROLLER_URL}`);
+  getMyTournaments: async (queryParams = {}) => {
+    const data = await get(`${TOURNAMENTS_CONTROLLER_URL}`, { sorting: 'startDate asc', ...queryParams});
     return data;
   },
   getMyTournamentById: async (tounamentId) => {

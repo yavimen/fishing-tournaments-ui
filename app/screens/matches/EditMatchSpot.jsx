@@ -13,7 +13,6 @@ export function EditMatchSpot({ route, navigation }) {
   const spot = route.params.spot;
   const tournament = route.params.tournament;
   const toast = useToast();
-  const labelCols = 6;
   const actualMarkerData = spot.latitude !== null ? { ...spot } : { ...match };
   const [markerData, setMarkerData] = useState(actualMarkerData);
 
@@ -81,7 +80,7 @@ export function EditMatchSpot({ route, navigation }) {
     <View className="flex-1 bg-white">
       <View className="flex p-6 bg-sky-400"></View>
       <View className="bg-white bg-sky-400">
-        <View className="flex justify-center items-center rounded-t-xl bg-white">
+        <View className="flex justify-center items-center rounded-t-3xl bg-white">
           <Text className="text-lg">Редагувати місце</Text>
         </View>
       </View>
@@ -94,11 +93,12 @@ export function EditMatchSpot({ route, navigation }) {
           onRegionChange={(e) => setMarkerData(e)}
           showsMyLocationButton={true}
           ref={mapRef}
+          zoomControlEnabled
         >
           <Marker coordinate={markerData} />
         </MapView>
         <TouchableOpacity
-          className="absolute bottom-3 right-3 bg-white p-2"
+          className="absolute top-16 right-3 bg-white p-2"
           onPress={() => mapRef.current.animateToRegion(actualMarkerData)}
         >
           <FeatherIcon color="black" name="map-pin" size={20} />

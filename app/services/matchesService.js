@@ -4,7 +4,7 @@ const MATCHES_CONTROLLER_URL = "api/v1/matches";
 
 export const matchesService = {
   getMatches: async (queryParams = {}) => {
-    const data = await get(`${MATCHES_CONTROLLER_URL}`, queryParams);
+    const data = await get(`${MATCHES_CONTROLLER_URL}`, { sorting: 'startDateTime asc', ...queryParams});
     return data;
   },
   getMatchById: async (matchId) => {

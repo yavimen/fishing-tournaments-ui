@@ -1,13 +1,15 @@
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { tournamentsService } from "../../services";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { ConfirmationDialog, TextRow } from "../../shared/components";
 import { useToast } from "react-native-toast-notifications";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { getFormattedDate, getFormattedTime } from "../../shared";
 
 const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
   const toast = useToast();
+  const labelCols = 6;
   const { setTournaments } = useGlobalContext();
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -50,65 +52,43 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
     navigation.navigate("UpdateTournament", { tournament: tournamentDetails });
   };
   return (
-    <View className="flex h-full bg-gray-500 p-3">
+    <View className="flex bg-white p-3">
+      <View className="flex-row justify-between items-center">
+        <Text className='text-lg'>{tournamentDetails.name}</Text>
+        <View className='flex-row'>
+          <TouchableOpacity
+            className="bg-red-400 p-2 rounded-full mr-2"
+            onPress={() => onDeleteAction()}
+          >
+            <FeatherIcon color="white" name="trash-2" size={20} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="bg-sky-400 p-2 rounded-full"
+            onPress={() => onUpdateAction()}
+          >
+            <FeatherIcon color="white" name="edit-2" size={20} />
+          </TouchableOpacity>
+        </View>
+      </View>
       <ScrollView>
-        <TouchableOpacity
-          className="bg-gray-400"
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            width: 40,
-            height: 40,
-            borderRadius: 25,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => onUpdateAction()}
-        >
-          <FeatherIcon color="white" name="edit-2" size={20} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          className="bg-red-400"
-          style={{
-            position: "absolute",
-            top: 55,
-            right: 10,
-            width: 40,
-            height: 40,
-            borderRadius: 25,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => onDeleteAction()}
-        >
-          <FeatherIcon color="white" name="trash-2" size={20} />
-        </TouchableOpacity>
-
         <TextRow
           label={"Дата проведення:"}
-          value={tournamentDetails?.startDate ?? "-"}
+          value={getFormattedDate(tournamentDetails?.startDate) ?? "-"}
           classes={"mb-2 mt-4"}
-          labelCols={8}
+          labelCols={labelCols}
         />
         <TextRow
           label={"Час проведення:"}
-          value={tournamentDetails?.startTime ?? "-"}
+          value={getFormattedTime(tournamentDetails?.startDate) ?? "-"}
           classes={"mb-2"}
-          labelCols={8}
+          labelCols={labelCols}
         />
         <TextRow
           label={"Максимальна кількість учасників:"}
           value={tournamentDetails?.maxParticipantNumber ?? "-"}
           classes={"mb-2"}
-          labelCols={8}
-        />
-        <TextRow
-          label={"Локації:"}
-          value={tournamentDetails?.locations ?? "-"}
-          classes={"mb-2"}
-          labelCols={8}
+          labelCols={labelCols}
         />
         <TextRow
           label={"Опис:"}

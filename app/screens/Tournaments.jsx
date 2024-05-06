@@ -17,12 +17,12 @@ export default function Tournaments() {
     <NavigationContainer independent={true}>
       <Stack.Navigator initialRouteName={"TournamentList"}>
         <Stack.Screen
-          options={{ title: "Мої турніри" }}
+          options={{ headerShown: false }}
           name="TournamentList"
           component={TournamentList}
         ></Stack.Screen>
         <Stack.Screen
-          options={{ title: "Додати турнір" }}
+          options={{ headerShown: false }}
           name="CreateTournament"
           component={CreateTournament}
         ></Stack.Screen>

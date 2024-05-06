@@ -1,26 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { tournamentsService } from '../../services';
 import {useNavigation} from '@react-navigation/native'
 
 import { useGlobalContext } from '../../context/GlobalContext';
 
+import { BaseInput, BaseButton } from '../../shared/components';
+import { useToast } from "react-native-toast-notifications";
+
 export default function CreateTournament() {
   const [name, setName] = useState('');
   const [maxParticipants, setMaxParticipants] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const { setTournaments } = useGlobalContext();
 
   const navigation = useNavigation();
+  const toast = useToast();
 
   const handleCreateTournament = async () => {
+    setLoading(true);
     if (!name.trim()) {
-      Alert.alert('Увага', 'Уведіть назву турніру');
+      toast.show('Уведіть назву турніру', {type: 'danger'});
+      setLoading(false);
       return;
     }
     const maxParticipantNumber = parseInt(maxParticipants);
     if (!maxParticipantNumber || maxParticipantNumber <= 0 || maxParticipantNumber >= 100) {
-      Alert.alert('Увага', 'Уведіть максимальну кількість учасників турніру (1-99)');
+      toast.show('Уведіть максимальну кількість учасників турніру (1-99)', {type: 'danger'});
+      setLoading(false);
       return;
     }
     await tournamentsService.createTournament({ name, maxParticipantNumber })
@@ -30,30 +39,37 @@ export default function CreateTournament() {
     setTournaments(tournaments);
     
     navigation.navigate('TournamentList');
+
+    toast.show('Турнір успішно створений', {type: 'success'});
+    setLoading(false);
   };
 
   return (
-    <View className = 'flex-1 p-4 justify-center items-center'>
-      <View className='w-full p-4 bg-white rounded-lg shadow'>
-        <TextInput
-          className='border border-gray-300 rounded-md px-4 py-2 mb-4'
-          placeholder="Назва"
-          value={name}
-          onChangeText={setName}
+    <View className = 'flex-1 bg-white'>
+      <View className="flex p-6 bg-sky-400"></View>
+      <View className="bg-white bg-sky-400">
+        <View className="flex justify-center items-center rounded-t-3xl bg-white">
+          <Text className="text-lg">Створити турнір</Text>
+        </View>
+      </View>
+      <View className='p-3'>
+        <BaseInput
+          label={'Назва турніру'}
+          property={name}
+          setProperty={setName}
         />
-        <TextInput
-          className='border border-gray-300 rounded-md px-4 py-2 mb-4'
-          placeholder="Максимальна кількість учасників (1-99)"
-          keyboardType="numeric"
-          value={maxParticipants}
-          onChangeText={setMaxParticipants}
+        <BaseInput
+          label={'Максимальна кількість учасників (1-99)'}
+          property={maxParticipants}
+          setProperty={setMaxParticipants}
+          inputType={'numeric'}
         />
-        <TouchableOpacity
-          className='bg-gray-500 rounded-md py-2'
+
+        <BaseButton
+          label={'Створити турнір'}
           onPress={handleCreateTournament}
-        >
-          <Text className='text-white text-lg font-semibold text-center'>Створити турнір</Text>
-        </TouchableOpacity>
+          loading={loading}
+        />
       </View>
     </View>
   );

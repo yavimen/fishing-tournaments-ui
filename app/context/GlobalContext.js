@@ -5,6 +5,7 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
     const [globalData, setGlobalData] = useState({});
     const [tournaments, setTournaments] = useState({ items: [], totalCount: 0 });
+    const [historicalTournaments, setHistoricalTournaments] = useState({ items: [], totalCount: 0 });
     const [isTournamentsLoading, setIsTournamentsLoading] = useState(false);
     const [tournamentDetails, setTournamentDetails] = useState({});
     const [matches, setMatches] = useState({items: [], totalCount: 0});
@@ -16,6 +17,8 @@ export const GlobalProvider = ({ children }) => {
             setGlobalData,
             tournaments,
             setTournaments,
+            historicalTournaments,
+            setHistoricalTournaments,
             isTournamentsLoading,
             setIsTournamentsLoading,
             tournamentDetails,

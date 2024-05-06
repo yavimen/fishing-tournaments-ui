@@ -52,7 +52,7 @@ export function MatchDetails({ route, navigation }) {
           <View className="flex flex-row bg-sky-400">
             {props.navigationState.routes.map((route, i) => (
               <TouchableOpacity
-                className={`flex-1 justify-center items-center rounded-t-xl ${
+                className={`flex-1 justify-center items-center rounded-t-3xl ${
                   index == i ? "bg-white" : "bg-gray-300"
                 }`}
                 key={route.key}

@@ -2,12 +2,10 @@ import {
   View,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { getLocationData, matchesService } from "../../services";
+import { getLocationData, matchesService, tournamentsService } from "../../services";
 import {
   MyDateTimePicker,
   BaseButton,
@@ -41,7 +39,7 @@ export function MatchCreate({ route, navigation }) {
   const [startDateTime, setStartDateTime] = useState(
     match?.startDateTime ?? null
   );
-  const { setMatches } = useGlobalContext();
+  const { setMatches, getMyTournamentById, setTournamentDetails } = useGlobalContext();
 
   const [loading, setLoading] = useState(false);
 
@@ -113,6 +111,8 @@ export function MatchCreate({ route, navigation }) {
     } else {
       const matches = await matchesService.getMatches({ tournamentId });
       setMatches(matches);
+      const TournamentDetails = await tournamentsService.getMyTournamentById(tournamentId);
+      setTournamentDetails(TournamentDetails);
       if (match?.id) {
         const updatedMatch = await matchesService.getMatchById(match.id);
         navigation.navigate("MatchDetails", {
@@ -133,7 +133,7 @@ export function MatchCreate({ route, navigation }) {
     <View className="flex-1 bg-white">
       <View className="flex p-6 bg-sky-400"></View>
       <View className="bg-white bg-sky-400">
-        <View className="flex justify-center items-center rounded-t-xl bg-white">
+        <View className="flex justify-center items-center rounded-t-3xl bg-white">
           <Text className="text-lg">
             {match?.id ? "Редагувати матч" : "Створити матч"}
           </Text>
