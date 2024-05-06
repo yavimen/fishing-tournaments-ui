@@ -2,6 +2,7 @@ import * as SecureStore from "expo-secure-store";
 import { createContext, useContext, useEffect, useState } from "react";
 import { addLogin, addRegister } from "../services/authService";
 import axios from "axios";
+import { jwtService } from "../services";
 
 const TOKEN_KEY = "jwt_token";
 
@@ -20,9 +21,18 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      console.info("store token: ", token);
+      console.log("store token: ", token);
 
       if (token) {
+        var tokenExpired = jwtService.isTokenExpired(token);
+        console.log("tokenExpired: ", tokenExpired);
+
+        if (tokenExpired) {
+          await SecureStore.deleteItemAsync(TOKEN_KEY);
+          console.log("token deleted from local storage", tokenExpired);
+          return;
+        }
+
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
         setAuthState({

@@ -23,8 +23,10 @@ export default function TournamentList() {
   };
 
   useEffect(() => {
+    setRefreshing(true);
     tournamentsService.getMyTournaments().then((result) => {
       setTournaments(result);
+      setRefreshing(false);
     });
   }, []);
 

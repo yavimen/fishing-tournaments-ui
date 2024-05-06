@@ -7,10 +7,10 @@ export function TextRow({label, value, classes, labelCols = 6}) {
   return (
     <View className={`flex ${ labelCols === 12 ? '' : 'flex-row'} ${classes}`}>
         <View className={labelCols === 6 ? 'basis-1/2' : labelClasses}>
-            <Text className='text-white font-bold'>{label}</Text>
+            <Text className='font-bold'>{label}</Text>
         </View>
         <View className={labelCols === 6 ? 'basis-1/2' : valueClasses}>
-            <Text className='text-white'>{value}</Text>
+            <Text className=''>{value}</Text>
         </View>
     </View>
   )

@@ -50,8 +50,8 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
     navigation.navigate("UpdateTournament", { tournament: tournamentDetails });
   };
   return (
-    <ScrollView className='h-full'>
-      <View className="flex bg-gray-500 mx-3 p-3 rounded-b-lg">
+    <View className="flex h-full bg-gray-500 p-3">
+      <ScrollView>
         <TouchableOpacity
           className="bg-gray-400"
           style={{
@@ -129,8 +129,8 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
           onCancel={cofirmCancelAction}
           onConfirm={cofirmSubmitAction}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

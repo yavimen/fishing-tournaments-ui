@@ -16,11 +16,12 @@ export const matchesService = {
     return data;
   },
   updateMatch: async (id, match) => {
+    console.log('updateMatch: ', match)
     const data = await put(`${MATCHES_CONTROLLER_URL}/${id}`, match);
     return data;
   },
   deleteMatch: async (matchId) => {
-    const data = await remove(`${TOURNAMENTS_CONTROLLER_URL}/${matchId}`);
+    const data = await remove(`${MATCHES_CONTROLLER_URL}/${matchId}`);
     return data;
   }
 }

@@ -14,7 +14,7 @@ if (!global.atob) {
 const USER_ID = "user_id";
 const TOKEN_KEY = "jwt_token";
 
-const jwtService = {
+export const jwtService = {
     getUserId: async () =>  {
         let userId = await SecureStore.getItemAsync(USER_ID);    
         
@@ -33,7 +33,14 @@ const jwtService = {
         }
 
         return userId;
-    }
+    },
+    isTokenExpired: (jwtToken) => {
+        const decoded = jwtDecode(jwtToken);
+        console.log(decoded)
+        if (!decoded || !decoded.exp) {
+          return true; // Token is invalid or doesn't have an expiration date
+        }
+        const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
+        return decoded.exp < currentTime; // Check if the expiration time is in the past
+      }
 };
-
-export default jwtService;
