@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { getFormattedDate, getFormattedTime } from "../dateTime";
-export function MyDateTimePicker({ date, setDate }) {
+export function MyDateTimePicker({ date, setDate, myClassName }) {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -29,7 +29,7 @@ export function MyDateTimePicker({ date, setDate }) {
   const formattedDate = getFormattedDate(date);
   const formattedTime = getFormattedTime(date);
   return (
-    <View>
+    <View className={myClassName}>
       <View className="flex flex-row justify-between">
         <View className='p-2'>
           <Text>{`${date ? formattedDate : '-'} ${formattedTime ?? ''}`}</Text>

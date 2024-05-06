@@ -4,3 +4,7 @@ export { ConfirmationDialog } from './ConfirmationDialog';
 export { MyDateTimePicker } from './MyDateTimePicker';
 export { FloatingAddButton } from './FloatingAddButton';
 export { MatchListItem } from './MatchListItem';
+export { SpotListItem } from './SpotListItem';
+export { BaseInput } from './BaseInput';
+export { BaseSelect } from './BaseSelect';
+export { BaseButton } from './BaseButton';

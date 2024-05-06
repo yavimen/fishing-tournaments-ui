@@ -8,8 +8,7 @@ import CreateTournament from "./tournaments/TournamentCreate";
 import TournamentDetails from "./tournaments/TournamentDetails";
 import UpdateTournament from "./tournaments/TournamentUpdate";
 
-import { MatchCreate } from "./matches";
-import { MatchDetails } from "./matches";
+import { MatchCreate, MatchDetails, EditMatchSpot } from "./matches";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +45,11 @@ export default function Tournaments() {
           options={{ headerShown: false }}
           name="MatchDetails"
           component={MatchDetails}
+        ></Stack.Screen>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="EditMatchSpot"
+          component={EditMatchSpot}
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

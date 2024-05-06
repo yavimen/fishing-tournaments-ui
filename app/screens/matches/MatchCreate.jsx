@@ -8,7 +8,11 @@ import {
 import React, { useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { getLocationData, matchesService } from "../../services";
-import { MyDateTimePicker } from "../../shared/components";
+import {
+  MyDateTimePicker,
+  BaseButton,
+  BaseInput,
+} from "../../shared/components";
 import { useToast } from "react-native-toast-notifications";
 import { useGlobalContext } from "../../context/GlobalContext";
 
@@ -39,6 +43,8 @@ export function MatchCreate({ route, navigation }) {
   );
   const { setMatches } = useGlobalContext();
 
+  const [loading, setLoading] = useState(false);
+
   const handleLockLocation = async () => {
     if (googleAddress) {
       setGoogleAddress(null);
@@ -57,22 +63,26 @@ export function MatchCreate({ route, navigation }) {
   };
 
   const handleCreateMatch = async () => {
+    setLoading(true);
     if (!googleAddress) {
       toast.show("Встановіть маркер на локацію проведення матчу", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
     if (!locationName?.trim()) {
       toast.show("Уведіть назву локації матчу", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
     if (!startDateTime) {
       toast.show("Встановіть дату та час проведення матчу", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
@@ -105,19 +115,31 @@ export function MatchCreate({ route, navigation }) {
       setMatches(matches);
       if (match?.id) {
         const updatedMatch = await matchesService.getMatchById(match.id);
-        navigation.navigate("MatchDetails", { tournament, match: updatedMatch });
+        navigation.navigate("MatchDetails", {
+          tournament,
+          match: updatedMatch,
+        });
       } else {
         navigation.navigate("TournamentDetails", { id: tournamentId });
       }
       toast.show(match?.id ? "Матч успішно оновлено" : "Матч успішно додано", {
         type: "success",
       });
+      setLoading(false);
     }
   };
 
   return (
-    <View className="flex-1 pt-3">
-      <View className="flex-1 mt-6">
+    <View className="flex-1 bg-white">
+      <View className="flex p-6 bg-sky-400"></View>
+      <View className="bg-white bg-sky-400">
+        <View className="flex justify-center items-center rounded-t-xl bg-white">
+          <Text className="text-lg">
+            {match?.id ? "Редагувати матч" : "Створити матч"}
+          </Text>
+        </View>
+      </View>
+      <View className="flex-1">
         <MapView
           showsUserLocation={true}
           initialRegion={initialRegion}
@@ -129,35 +151,29 @@ export function MatchCreate({ route, navigation }) {
         </MapView>
       </View>
       <View className="flex-1 px-3">
-        <Text className="text-center color-gray-500">
+        <Text className="text-center color-gray-500 mb-2">
           {googleAddress?.plus_code?.compound_code}
         </Text>
-        <TouchableOpacity
-          className="p-2 bg-gray-200 mx-3 mt-2 mb-4 rounded-lg"
+        
+        <BaseButton
+          label={googleAddress ? "Відкріпити маркер" : "Зафіксувати локацію"}
           onPress={handleLockLocation}
-        >
-          <Text className="text-center">
-            {googleAddress ? "Відкріпити маркер" : "Зафіксувати локацію"}
-          </Text>
-        </TouchableOpacity>
-        <Text className="font-bold mb-1">Назва локації</Text>
-        <TextInput
-          className="border rounded-md px-4 py-2 mb-4"
-          placeholder="..."
-          value={locationName}
-          onChangeText={setLocationName}
-          placeholderTextColor={"#9ca3af"}
+          myClassName={'mb-2'}
         />
-        <MyDateTimePicker date={startDateTime} setDate={setStartDateTime} />
 
-        <TouchableOpacity
-          className="bg-gray-200 rounded-md py-2 bg-sky-500 mt-3"
+        <BaseInput
+          label={"Назва локації"}
+          property={locationName}
+          setProperty={setLocationName}
+        />
+        
+        <MyDateTimePicker myClassName={'mb-3'} date={startDateTime} setDate={setStartDateTime} />
+
+        <BaseButton
+          label={match?.id ? "Оновити матч" : "Створити матч"}
           onPress={handleCreateMatch}
-        >
-          <Text className="text-lg font-semibold text-center color-white">
-            {match?.id ? "Оновити матч" : "Створити матч"}
-          </Text>
-        </TouchableOpacity>
+          loading={loading}
+        />
       </View>
     </View>
   );
