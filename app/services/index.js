@@ -4,3 +4,4 @@ export { getLocationData } from "./googleMapsService";
 export { jwtService } from "./jwtService";
 export { spotsService } from "./spotsService";
 export { participantsService } from "./participantsService";
+export { matchResultsService } from "./matchResultsService";

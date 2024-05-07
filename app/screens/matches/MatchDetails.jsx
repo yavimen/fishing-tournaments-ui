@@ -1,21 +1,14 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { spotsService } from "../../services";
-import { MatchDetailsCard } from "./MatchDetailsCard";
+import { spotsService, matchResultsService } from "../../services";
 import { TabView, SceneMap } from "react-native-tab-view";
-import { MatchSpots } from "./MatchSpots";
+import { MatchSpots, MatchResults, MatchDetailsCard } from "./index";
 import { useGlobalContext } from "../../context/GlobalContext";
 
-export function MatchDetails({ route, navigation }) {
+export default function MatchDetails({ route, navigation }) {
   const match = route.params.match;
   const tournament = route.params.tournament;
-  const { setSpots } = useGlobalContext();
+  const { setSpots, setMatchResults } = useGlobalContext();
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -25,26 +18,40 @@ export function MatchDetails({ route, navigation }) {
   ]);
 
   useEffect(() => {
-    spotsService.getSpots({ matchId: match.id})
-    .then((results) => {
+    spotsService.getSpots({ matchId: match.id }).then((results) => {
       setSpots(results);
-    })
-  }, [])
+    });
+    matchResultsService.getMatchResults(match.id).then((results) => {
+      setMatchResults(results);
+    });
+  }, []);
 
   return (
     <View className="flex-1">
-      <View className='flex p-6 bg-sky-400'></View>
+      <View className="flex p-6 bg-sky-400"></View>
       <TabView
         navigationState={{ index, routes }}
         renderScene={SceneMap({
           first: () => (
-            <MatchDetailsCard navigation={navigation} match={match} tournament={tournament} />
+            <MatchDetailsCard
+              navigation={navigation}
+              match={match}
+              tournament={tournament}
+            />
           ),
           second: () => (
-            <MatchSpots navigation={navigation} match={match} tournament={tournament} />
+            <MatchSpots
+              navigation={navigation}
+              match={match}
+              tournament={tournament}
+            />
           ),
           third: () => (
-            <View><Text>Результати</Text></View>
+            <MatchResults
+              navigation={navigation}
+              match={match}
+              tournament={tournament}
+            />
           ),
         })}
         onIndexChange={setIndex}

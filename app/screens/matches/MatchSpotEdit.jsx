@@ -8,7 +8,7 @@ import * as Location from "expo-location";
 import { spotsService } from "../../services";
 import { useGlobalContext } from "../../context/GlobalContext";
 
-export function EditMatchSpot({ route, navigation }) {
+export function MatchSpotEdit({ route, navigation }) {
   const match = route.params.match;
   const spot = route.params.spot;
   const tournament = route.params.tournament;
@@ -109,6 +109,7 @@ export function EditMatchSpot({ route, navigation }) {
           setProperty={setSpotName}
           property={spotName}
           label={"Назва місця"}
+          myClassName={'mb-6'}
         />
         <BaseButton label={"Оновити місце учасника"} onPress={onUpdateSpot} loading={loading} />
       </View>

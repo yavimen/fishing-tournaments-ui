@@ -23,5 +23,9 @@ export const matchesService = {
   deleteMatch: async (matchId) => {
     const data = await remove(`${MATCHES_CONTROLLER_URL}/${matchId}`);
     return data;
-  }
+  },
+  getMatchPlayers: async (matchId) => {
+    const data = await get(`${MATCHES_CONTROLLER_URL}/${matchId}/players`);
+    return data;
+  },
 }

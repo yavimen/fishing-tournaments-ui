@@ -35,7 +35,7 @@ export default function ParticipantListCard({ tournament, loading }) {
         }
       >
         {myTournamentParticipants.totalCount ? myTournamentParticipants.items.map((x) => (
-          <ParticipantListItem participant={x} />
+          <ParticipantListItem participant={x} key={x.id}/>
         )) : <Text className='text-center text-base'>У вашого турніру ще немає учасників</Text>}
       </ScrollView>
     </View>

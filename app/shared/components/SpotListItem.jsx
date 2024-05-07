@@ -20,7 +20,7 @@ export function SpotListItem({ spot, navigation, match, tournament }) {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("EditMatchSpot", { spot, match, tournament })} className="bg-sky-400 p-3 flex justify-center items-center rounded-3xl">
+      <TouchableOpacity onPress={() => navigation.navigate("MatchSpotEdit", { spot, match, tournament })} className="bg-sky-400 p-3 flex justify-center items-center rounded-3xl">
         <FeatherIcon color="white" name="edit-2" size={20} />
       </TouchableOpacity>
     </View>

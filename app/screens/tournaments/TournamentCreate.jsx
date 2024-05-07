@@ -34,19 +34,19 @@ export default function CreateTournament() {
       return;
     }
     const maxParticipantNumber = parseInt(maxParticipants);
-    if (!maxParticipantNumber || maxParticipantNumber <= 3 || maxParticipantNumber >= 100) {
+    if (!maxParticipantNumber || maxParticipantNumber < 3 || maxParticipantNumber >= 100) {
       toast.show('Уведіть максимальну кількість учасників турніру (3-99)', {type: 'danger'});
       setLoading(false);
       return;
     }
-    if (!ratingСriterion) {
+    if (ratingСriterion === null) {
       toast.show('Оберіть критерій оцінювання', {type: 'danger'});
       setLoading(false);
       return;
     }
     await tournamentsService.createTournament({ name, maxParticipantNumber, ratingСriterion })
 
-    const tournaments = await tournamentsService.getMyTournaments();
+    const tournaments = await tournamentsService.getMyTournaments({actual:true});
     
     setTournaments(tournaments);
     

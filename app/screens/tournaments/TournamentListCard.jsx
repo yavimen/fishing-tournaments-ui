@@ -32,7 +32,7 @@ export function TournamentListCard({ loading }) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {tournaments.totalCount ? tournaments.items.map((x) => (
+        {tournaments?.totalCount ? tournaments.items.map((x) => (
           <TournamentListItem
             tournament={x}
             onPress={() => navigateToDetailsPage(x.id)}

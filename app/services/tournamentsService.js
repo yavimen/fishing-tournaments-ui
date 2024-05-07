@@ -19,8 +19,12 @@ export const tournamentsService = {
     const data = await put(`${TOURNAMENTS_CONTROLLER_URL}/${id}`, tournament);
     return data;
   },
-  deleteTournament: async (tounamentId) => {
-    const data = await remove(`${TOURNAMENTS_CONTROLLER_URL}/${tounamentId}`);
+  deleteTournament: async (tournamentId) => {
+    const data = await remove(`${TOURNAMENTS_CONTROLLER_URL}/${tournamentId}`);
     return data;
-  }
+  },
+  publishTournament: async (tournamentId) => {
+    const data = await put(`${TOURNAMENTS_CONTROLLER_URL}/${tournamentId}/toggle-published`);
+    return data;
+  },
 }
