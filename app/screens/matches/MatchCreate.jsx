@@ -52,6 +52,8 @@ export function MatchCreate({ route, navigation }) {
       markerData.latitude,
       markerData.longitude
     );
+    const rightAddressParts = result.plus_code.compound_code.split(" ").filter((x, index) => index !== 0);
+    result.plus_code.compound_code = rightAddressParts.join(" ");
     setGoogleAddress(result);
     console.info("address: ", result);
   };

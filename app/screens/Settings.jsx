@@ -1,21 +1,23 @@
 import {
   View,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   Text,
   Image,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import React, { useEffect, useState } from "react";
-import SettingsMenuItem from "../shared/components/SettingsMenuItem";
 import { useAuth } from "../context/AuthContext";
 import avatar from "../../assets/fisherman.png";
 import { ConfirmationDialog } from "../shared/components";
 
 import { getAuthTestData } from "../services/authService";
+import { BaseButton } from "../shared/components";
+import { jwtDecode } from "jwt-decode";
+import { useGlobalContext } from "../context/GlobalContext";
+import { accountService } from "../services/accountService";
 
-export default function Settings() {
+export default function Settings({navigation}) {
   const { logout } = useAuth();
 
   const profile = `
@@ -47,7 +49,7 @@ export default function Settings() {
   w-7
   h-7
   rounded-full
-  bg-blue-500
+  bg-sky-400
 `;
 
   const profileName = `
@@ -65,6 +67,7 @@ export default function Settings() {
   text-center
 `;
 
+  const { userInfo, setUserInfo } = useGlobalContext();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [cofirmText, setCofirmText] = useState(null);
   const [cofirmCancelAction, setCofirmCancelAction] = useState(() => () => {
@@ -78,13 +81,15 @@ export default function Settings() {
     const sendAuthRequest = async () => {
       const response = await getAuthTestData();
       console.info("Response: ", response);
+      const accountInfo = await accountService.getUserInfo();
+      setUserInfo(accountInfo)
     };
 
     sendAuthRequest();
   }, []);
 
   const onLogoutAction = () => {
-    setCofirmText('Ви впевнені, що хочете вийти з облікового запису ?');
+    setCofirmText("Ви впевнені, що хочете вийти з облікового запису ?");
     setCofirmCancelAction(() => () => {
       setShowConfirmDialog(false);
     });
@@ -108,31 +113,27 @@ export default function Settings() {
 
             <TouchableOpacity
               onPress={() => {
-                // handle onPress
+                navigation.navigate("SettingsUserInfo");
               }}
             >
               <View className={profileAction}>
-                <FeatherIcon color="#fff" name="edit-3" size={15} />
+                <FeatherIcon color="white" name="edit-2" size={15} />
               </View>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
 
         <View>
-          <Text className={profileName}>John Doe</Text>
+          <Text className={profileName}>{userInfo?.fullName??"-"}</Text>
 
           <Text className={profileAddress}>
-            123 Maple Street. Anytown, PA 17101
+            {userInfo?.email??"-"}
           </Text>
         </View>
       </View>
-      <ScrollView className="p-4">
-        <SettingsMenuItem
-          iconName={"log-out"}
-          title={"Вийти з акаунта"}
-          onPressHandler={() => onLogoutAction()}
-        />
-      </ScrollView>
+      <View className="flex-1 justify-center p-4">
+        <BaseButton label={"Вийти з акаунта"} onPress={onLogoutAction} />
+      </View>
       <ConfirmationDialog
         visible={showConfirmDialog}
         message={cofirmText}

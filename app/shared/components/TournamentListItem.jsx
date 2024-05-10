@@ -3,7 +3,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import React from 'react'
 import { getFormattedDate, getFormattedTime } from '../dateTime';
 
-export function TournamentListItem({ tournament, onPress }) {
+export function TournamentListItem({ tournament, onPress, isPublic }) {
   return (
     <TouchableOpacity onPress={onPress} className='flex flex-row bg-white mb-3 justify-between rounded-3xl drop-shadow-2xl border'>
       <View className='flex bg-sky-400 rounded-3xl py-2 px-3' >
@@ -21,10 +21,10 @@ export function TournamentListItem({ tournament, onPress }) {
           </View>
           <View className='flex flex-row justify-end items-center'>
             <View>
-              <Text className='black'>{tournament.participantAmount ?? 0}</Text>
+              <Text className='black'>{isPublic ? tournament.firstMatchLocation : tournament.participantAmount ?? 0}</Text>
             </View>
             <View>
-              <FeatherIcon color="black" name="user" size={15} />
+              <FeatherIcon color="black" name={isPublic ? "map-pin" : "user"} size={15} />
             </View>
           </View>
         </View>

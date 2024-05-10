@@ -5,3 +5,5 @@ export { jwtService } from "./jwtService";
 export { spotsService } from "./spotsService";
 export { participantsService } from "./participantsService";
 export { matchResultsService } from "./matchResultsService";
+export { publicTournamentsService } from "./public/publicTournamentsService";
+export { publicMatchesService } from "./public/publicMatchesService"

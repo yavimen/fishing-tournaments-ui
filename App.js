@@ -1,5 +1,4 @@
 import { AuthProvider, useAuth } from "./app/context/AuthContext";
-import Home from "./app/screens/Home";
 import Login from "./app/screens/Login";
 import Register from "./app/screens/Register";
 import ChangePassword from "./app/screens/ChangePassword";
@@ -7,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GlobalProvider } from "./app/context/GlobalContext";
 import { ToastProvider } from "react-native-toast-notifications";
+import MainComponent from "./app/screens/MainComponent";
 
 export default function App() {
   return (
@@ -35,12 +35,12 @@ export const Layout = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={authState.authenticated ? "Home" : "Login"}
+        initialRouteName={authState.authenticated ? "MainComponent" : "Login"}
       >
         {authState.authenticated ? (
           <Stack.Screen
-            name="Home"
-            component={Home}
+            name="MainComponent"
+            component={MainComponent}
             options={{ headerShown: false }}
           ></Stack.Screen>
         ) : (

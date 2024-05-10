@@ -64,7 +64,7 @@ export default function CreateTournament() {
           <Text className="text-lg">Створити турнір</Text>
         </View>
       </View>
-      <View className='p-3'>
+      <View className='flex-1 p-3 justify-center'>
         <BaseInput
           label={'Назва турніру'}
           property={name}

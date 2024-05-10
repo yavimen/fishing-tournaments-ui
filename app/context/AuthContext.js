@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await SecureStore.deleteItemAsync(TOKEN_KEY);
+    await SecureStore.deleteItemAsync("user_id");
 
     axios.defaults.headers.common["Authorization"] = "";
 

@@ -5,7 +5,7 @@ import { getFormattedDate } from '../dateTime';
 
 export function ParticipantListItem({ participant }) {
   return (
-    <View className="flex flex-row justify-between bg-white mb-2 border border-black rounded-3xl drop-shadow-2xl">
+    <View className={`flex flex-row justify-between mb-2 border border-black rounded-3xl drop-shadow-2xl ${participant.position === 1 ? 'bg-green-400' : ' bg-white'}`}>
       <View className="flex p-1">
         <View className='ml-3'>
           <View>

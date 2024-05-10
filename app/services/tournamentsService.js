@@ -27,4 +27,12 @@ export const tournamentsService = {
     const data = await put(`${TOURNAMENTS_CONTROLLER_URL}/${tournamentId}/toggle-published`);
     return data;
   },
+  determineTournamentWinner: async (tournamentId) => {
+    const data = await put(`${TOURNAMENTS_CONTROLLER_URL}/${tournamentId}/determine-winner`);
+    return data;
+  },
+  registerForTournament: async (tournamentId) => {
+    const data = await post(`${TOURNAMENTS_CONTROLLER_URL}/${tournamentId}/register`);
+    return data;
+  },
 }

@@ -79,7 +79,7 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
       };
       setTournamentDetails(updatedTournament);
     }
-    toast.show(tournamentDetails.isPublished ?"Турнір успішно опубліковано" : "Турнір успішно приховано", {
+    toast.show(tournamentDetails.isPublished ? "Турнір успішно приховано" : "Турнір успішно опубліковано", {
       type: "success",
     });
     setLoading(false);
@@ -88,7 +88,7 @@ const TournamentDetailsCart = ({ tournamentDetails, navigation }) => {
   return (
     <View className="flex bg-white p-3">
       <View className="flex-row justify-between items-center">
-        <Text className="text-lg">{tournamentDetails.name}</Text>
+        <Text className="text-lg">{"Турнір " + tournamentDetails.name}</Text>
         <View className="flex-row">
           <TouchableOpacity
             className="bg-red-400 p-2 rounded-full mr-2"

@@ -24,14 +24,6 @@ export function MatchListItem({ match, onPress }) {
     return `${putZeroIfRequires(dateHours)}:${putZeroIfRequires(dateMinutes)}`;
   };
 
-  const addressParts = match.actualAddressName.split(", ");
-  let city = "";
-  const cityParts = addressParts[0].split(" ");
-  cityParts.map((x, i) =>
-    i !== 0 ? (city += x + (i !== cityParts.length - 1 ? " " : "")) : ""
-  );
-  const formattedAddress = `${city}, ${addressParts[addressParts.length - 1]}`;
-
   const formattedDate = formatDate();
   const formattedTime = formatTime();
   return (
@@ -66,7 +58,7 @@ export function MatchListItem({ match, onPress }) {
           </View>
           <View className="flex flex-row justify-end items-center">
             <View className="flex">
-              <Text className="black text-xs">{formattedAddress}</Text>
+              <Text className="black text-xs">{match.actualAddressName}</Text>
             </View>
             <View>
               <FeatherIcon color="black" name="map-pin" size={15} />

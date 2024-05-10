@@ -1,7 +1,7 @@
 import axios from "axios";
 import { handleError } from "../shared/helpers";
 
-const BASE_URL = "https://dda6-188-163-116-185.ngrok-free.app"; // Replace with your API base URL
+const BASE_URL = "https://5a85-188-163-116-185.ngrok-free.app"; // Replace with your API base URL
 
 // helpers
 export const get = async (endpoint, queryParams = {}) => {

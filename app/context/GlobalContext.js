@@ -13,6 +13,11 @@ export const GlobalProvider = ({ children }) => {
     const [myTournamentParticipants, setMyTournamentParticipants] = useState({items: [], totalCount: 0});
     const [matchPlayers, setMatchPlayers] = useState([]);
     const [matchResults, setMatchResults] = useState({items: [], totalCount: 0});
+    const [publicTournaments, setPublicTournaments] = useState({ items: [], totalCount: 0 });
+    const [publicTournamentDetails, setPublicTournamentDetails] = useState({});
+    const [participatedTournamens, setParticipatedTournamens] = useState({ items: [], totalCount: 0 });
+    const [userInfo, setUserInfo] = useState(null);
+    const [publicMatches, setPublicMatches] = useState({ items: [], totalCount: 0 });
 
     return (
         <GlobalContext.Provider value={{ 
@@ -35,7 +40,17 @@ export const GlobalProvider = ({ children }) => {
             matchPlayers,
             setMatchPlayers,
             matchResults,
-            setMatchResults
+            setMatchResults,
+            publicTournaments,
+            setPublicTournaments,
+            publicTournamentDetails,
+            setPublicTournamentDetails,
+            participatedTournamens,
+            setParticipatedTournamens,
+            userInfo,
+            setUserInfo,
+            publicMatches,
+            setPublicMatches,
          }}
         >
             {children}

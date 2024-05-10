@@ -25,7 +25,7 @@ export default function UpdateTournament({ route, navigation }) {
     { label: "Довжина", value: 1 },
   ];
 
-  const { getMyTournamentById, setTournamentDetails } = useGlobalContext();
+  const { setTournamentDetails } = useGlobalContext();
   const toast = useToast();
 
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ export default function UpdateTournament({ route, navigation }) {
     const maxParticipantNumber = parseInt(maxParticipants);
     if (
       !maxParticipantNumber ||
-      maxParticipantNumber <= 0 ||
+      maxParticipantNumber < 3 ||
       maxParticipantNumber >= 100
     ) {
       toast.show("Уведіть максимальну кількість учасників турніру (1-99)", {
