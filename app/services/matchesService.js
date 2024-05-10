@@ -11,6 +11,10 @@ export const matchesService = {
     const data = await get(`${MATCHES_CONTROLLER_URL}/${matchId}`);
     return data;
   },
+  getMatchByIdForPlayer: async (matchId) => {
+    const data = await get(`${MATCHES_CONTROLLER_URL}/${matchId}/for-player`);
+    return data;
+  },
   createMatch: async (match) => {
     const data = await post(`${MATCHES_CONTROLLER_URL}`, match);
     return data;

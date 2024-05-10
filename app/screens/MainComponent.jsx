@@ -15,7 +15,7 @@ import MatchDetails from "./matches/MatchDetails";
 import SettingsUserInfo from "./SettingsUserInfo";
 
 import { getAuthTestData } from "../services/authService";
-
+import { PublicMatchDetail } from "./public/PublicMatchDetail";
 import NavigationButtons from "../shared/components/NavigationButtons";
 import * as Location from "expo-location";
 
@@ -109,6 +109,11 @@ export default function MainComponent() {
           options={{ headerShown: false }}
           name="SettingsUserInfo"
           component={SettingsUserInfo}
+        ></Stack.Screen>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PublicMatchDetail"
+          component={PublicMatchDetail}
         ></Stack.Screen>
       </Stack.Navigator>
       <NavigationButtons />

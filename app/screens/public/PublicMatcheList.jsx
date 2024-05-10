@@ -24,7 +24,7 @@ export function PublicMatcheList({ tournamentId, navigation, tournament }) {
         }
       >
         {publicMatches.totalCount ? publicMatches.items.map((x) => (
-          <MatchListItem match={x} key={x.id} onPress={() => navigation.navigate('MatchDetails', { match: x, tournament })} />
+          <MatchListItem match={x} key={x.id} onPress={() => navigation.navigate('PublicMatchDetail', { matchId: x.id, })} />
         )) : <Text className="text-base text-center">{"Ваш турнір ще немає матчів"}</Text>}
       </ScrollView>
     </View>

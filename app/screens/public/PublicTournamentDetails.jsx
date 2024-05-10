@@ -84,7 +84,7 @@ export function PublicTournamentDetails({ route, navigation }) {
       setMyTournamentParticipants(tournamentParticipants);
 
       const publicMatches = await publicMatchesService.getPublicMatches({
-        tournamentId: publicTournamentDetails.id,
+        tournamentId: tournamentId,
       });
       setPublicMatches(publicMatches);
 
