@@ -67,13 +67,13 @@ export function MatchResults({ tournament, match, navigation }) {
           matchResults.items.map((x) => (
             <MatchResultListItem
               result={x}
-              tournamentRatingCriteria={tournament.ratingCriteria}
+              tournamentRatingCriteria={tournament.ratingСriterion}
               onPress={onDelete}
               key={x.id}
             />
           ))
         ) : (
-          <Text>{"Матч ще не має результатів"}</Text>
+          <Text className='text-center'>{"Матч ще не має результатів"}</Text>
         )}
       </ScrollView>
       <FloatingAddButton
